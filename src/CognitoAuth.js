@@ -82,10 +82,11 @@ export default class CognitoAuth {
   }
 
   async initialize() {
+    this.username = await this.getLastUser();
     const tokenScopes = new CognitoTokenScopes(this.TokenScopesArray);
     this.signInUserSession = await this.getCachedSession();
     this.signInUserSession.setTokenScopes(tokenScopes);
-    this.username = await this.getLastUser();
+
   }
 
   /**
