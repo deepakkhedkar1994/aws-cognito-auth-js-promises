@@ -98,10 +98,10 @@ var CognitoAuth = function () {
   }
 
   CognitoAuth.prototype.initialize = async function initialize() {
+    this.username = await this.getLastUser();
     var tokenScopes = new CognitoTokenScopes(this.TokenScopesArray);
     this.signInUserSession = await this.getCachedSession();
     this.signInUserSession.setTokenScopes(tokenScopes);
-    this.username = await this.getLastUser();
   };
 
   /**

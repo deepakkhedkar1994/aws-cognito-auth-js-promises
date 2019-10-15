@@ -1,7 +1,7 @@
 {
   "name": "aws-cognito-auth-js-promises",
   "description": "Amazon Cognito Auth JavaScript SDK",
-  "version": "1.0.0",
+  "version": "1.2.3",
   "author": {
     "name": "Deepak Khedkar",
     "email": "deepakkhedkar1994@gmail.com",
