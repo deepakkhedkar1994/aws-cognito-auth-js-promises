@@ -282,7 +282,8 @@ var CognitoAuth = function () {
     var cachedScopesSet = new Set(this.signInUserSession.tokenScopes.getScopes());
     var URL = this.getFQDNSignIn();
     if (this.signInUserSession != null && this.signInUserSession.isValid()) {
-      return this.userhandler.onSuccess(this.signInUserSession);
+      // return this.userhandler.onSuccess(this.signInUserSession);
+      return this.signInUserSession;
     }
     this.signInUserSession = await this.getCachedSession();
     // compare scopes
@@ -297,14 +298,16 @@ var CognitoAuth = function () {
       this.signInUserSession.setRefreshToken(refreshToken);
       this.launchUri(URL);
     } else if (this.signInUserSession.isValid()) {
-      return this.userhandler.onSuccess(this.signInUserSession);
+      // return this.userhandler.onSuccess(this.signInUserSession);
+      return this.signInUserSession;
     } else if (!this.signInUserSession.getRefreshToken() || !this.signInUserSession.getRefreshToken().getToken()) {
       this.launchUri(URL);
     } else {
       await this.refreshSession(this.signInUserSession.getRefreshToken().getToken());
       return this.signInUserSession;
     }
-    return undefined;
+    // return undefined;
+    throw undefined;
   };
 
   /**
@@ -323,7 +326,8 @@ var CognitoAuth = function () {
       var response = httpRequestResponse.split(this.getCognitoConstants().POUNDSIGN)[0];
       map = this.getQueryParameters(response, this.getCognitoConstants().QUESTIONMARK);
       if (map.has(this.getCognitoConstants().ERROR)) {
-        return this.userhandler.onFailure(map.get(this.getCognitoConstants().ERROR_DESCRIPTION));
+        //return this.userhandler.onFailure(map.get(this.getCognitoConstants().ERROR_DESCRIPTION));
+        throw map.get(this.getCognitoConstants().ERROR_DESCRIPTION);
       }
 
       var _response = await this.getCodeQueryParameter(map);
@@ -739,7 +743,8 @@ var CognitoAuth = function () {
     var idToken = new CognitoIdToken();
     var state = null;
     if (Object.prototype.hasOwnProperty.call(jsonDataObject, this.getCognitoConstants().ERROR)) {
-      return this.userhandler.onFailure(jsonData);
+      // return this.userhandler.onFailure(jsonData);
+      throw jsonData;
     }
     if (Object.prototype.hasOwnProperty.call(jsonDataObject, this.getCognitoConstants().IDTOKEN)) {
       this.signInUserSession.setIdToken(new CognitoIdToken(jsonDataObject.id_token));

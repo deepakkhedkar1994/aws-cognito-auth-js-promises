@@ -243,7 +243,8 @@ export default class CognitoAuth {
     const cachedScopesSet = new Set(this.signInUserSession.tokenScopes.getScopes());
     const URL = this.getFQDNSignIn();
     if (this.signInUserSession != null && this.signInUserSession.isValid()) {
-      return this.userhandler.onSuccess(this.signInUserSession);
+      // return this.userhandler.onSuccess(this.signInUserSession);
+      return this.signInUserSession;
     }
     this.signInUserSession = await this.getCachedSession();
     // compare scopes
@@ -258,7 +259,8 @@ export default class CognitoAuth {
       this.signInUserSession.setRefreshToken(refreshToken);
       this.launchUri(URL);
     } else if (this.signInUserSession.isValid()) {
-      return this.userhandler.onSuccess(this.signInUserSession);
+      // return this.userhandler.onSuccess(this.signInUserSession);
+      return this.signInUserSession;
     } else if (!this.signInUserSession.getRefreshToken()
       || !this.signInUserSession.getRefreshToken().getToken()) {
       this.launchUri(URL);
@@ -266,7 +268,8 @@ export default class CognitoAuth {
       await this.refreshSession(this.signInUserSession.getRefreshToken().getToken());
       return this.signInUserSession;
     }
-    return undefined;
+    // return undefined;
+    throw undefined;
   }
 
   /**
@@ -285,7 +288,8 @@ export default class CognitoAuth {
         this.getCognitoConstants().QUESTIONMARK
       );
       if (map.has(this.getCognitoConstants().ERROR)) {
-        return this.userhandler.onFailure(map.get(this.getCognitoConstants().ERROR_DESCRIPTION));
+        //return this.userhandler.onFailure(map.get(this.getCognitoConstants().ERROR_DESCRIPTION));
+        throw map.get(this.getCognitoConstants().ERROR_DESCRIPTION);
       }
 
       const _response = await this.getCodeQueryParameter(map);
@@ -668,7 +672,8 @@ export default class CognitoAuth {
     const state = null;
     if (Object.prototype.hasOwnProperty.call(jsonDataObject,
       this.getCognitoConstants().ERROR)) {
-      return this.userhandler.onFailure(jsonData);
+      // return this.userhandler.onFailure(jsonData);
+      throw jsonData;
     }
     if (Object.prototype.hasOwnProperty.call(jsonDataObject,
       this.getCognitoConstants().IDTOKEN)) {
