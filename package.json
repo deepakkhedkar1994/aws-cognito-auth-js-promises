@@ -1,7 +1,7 @@
 {
   "name": "aws-cognito-auth-js-promises",
   "description": "Amazon Cognito Auth JavaScript SDK",
-  "version": "1.2.5",
+  "version": "1.2.7",
   "author": {
     "name": "Deepak Khedkar",
     "email": "deepakkhedkar1994@gmail.com",
@@ -11,7 +11,7 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/deepakkhedkar1994/amazon-cognito-auth-js.git"
+    "url": "https://github.com/deepakkhedkar1994/aws-cognito-auth-js-promises.git"
   },
   "license": "Apache-2.0",
   "licenses": [
