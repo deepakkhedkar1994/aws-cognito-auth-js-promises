@@ -72,6 +72,7 @@ export default class CognitoAuth {
     //this.signInUserSession.setTokenScopes(tokenScopes);
     //this.launchUri = typeof LaunchUri === 'function' ? LaunchUri : launchUri;
     this.launchUri = undefined;
+
     /**
      * By default, AdvancedSecurityDataCollectionFlag is set to true, if no input value is provided.
      */
@@ -269,7 +270,7 @@ export default class CognitoAuth {
       return this.signInUserSession;
     }
     // return undefined;
-    throw undefined;
+    throw this.signInUserSession;
   }
 
   /**
